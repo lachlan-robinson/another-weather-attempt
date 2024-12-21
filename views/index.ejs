@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<!-- -->
+
+<html>
+    <head>
+        <title>Another Weather App</title>
+        <link rel="stylesheet" href="styles/style.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gradient-to-r from-slate-950 to-slate-900 flex items-center justify-center flex-col">
+        <h1>Header</h1>
+        <div class="flex w-fit p-6 mx-auto bg-slate-950 rounded-xl shadow-lg gap-x-4">
+            <div class="my-2">
+                <h3 class="text-gray-50 font-bold"><%= weather.general.cityName %>, <%= weather.general.countryCode%></h3>
+                <h3 class="text-gray-50"><%= weather.general.day %>,</h3>
+                <h3 class="text-gray-50"><%= weather.general.date %></h3>
+            </div>
+            <div>
+                <div class="flex items-center gap-x-2 p-2 rounded-xl my-2 bg-gradient-to-l from-cyan-500 to-blue-500 hover:cursor-pointer">
+                    <img src="/img/sun.png" class="size-7" />
+                    <h2 class="text-lg text-gray-50 font-bold"><%= weather.general.sunrise %>AM</h2>
+                </div>
+                <div class="flex items-center gap-x-2 p-2 rounded-xl my-2 bg-gradient-to-r from-zinc-500 to-zinc-400 hover:cursor-pointer">
+                    <img src="/img/moon.png" class="size-7" />
+                    <h2 class="text-lg text-gray-50 font-bold"><%= weather.general.sunset %>PM</h2>
+                </div>
+            </div>
+        </div>
+        <% for (var j = 0; j < weather.tags.length; j++) { let currentTag = weather.tags[j]; %>
+        <div class="w-8/12 flex flex-col justify-center">
+            <h3 class="font-bold text-gray-50"><%= currentTag %></h3>
+            <div id="hour-container" class="flex flex-row flex-wrap justify-between w-full py-2 rounded-xl p-6 m-4">
+                <% for (var i = 0; i < weather.weatherData.length; i++) { if (weather.weatherData[i].date === currentTag) { const desc = weather.weatherData[i].weatherDesc; let path = "/img/fewcloud-d.png"; switch (desc) { case "Clear": path = "/img/sun.png"; break; case "Clouds": path = "/img/cloud.png"; break; case "broken clouds": path = "/img/cloud.png"; break; case "Drizzle": path = "/img/shower.png"; break; case "Rain": path = "/img/rain.png"; break; case "Thunderstorm": path = "/img/thunder.png"; break; case "Snow": path = "/img/snow.png"; break; case "Mist": path = "/img/mist.png";
+                break; default: break; } %>
+                <div class="mx-2 my-2 flex-1 grow-1 min-w-72">
+                    <h3 class="text-gray-50 capitalize"><%= weather.weatherData[i].weatherDesc %></h3>
+                    <div class="flex min-h-32 p-6 bg-slate-950 rounded-xl shadow-lg gap-x-4">
+                        <div>
+                            <div class="bg-gray-50 p-1 rounded-xl align-middle">
+                                <h3 class="text-slate-900 text-xl text-center"><%= weather.weatherData[i].time %></h3>
+                            </div>
+
+                            <h2 class="text-gray-50 font-bold text-2xl text-center"><%= weather.weatherData[i].temp %></h2>
+                        </div>
+                        <div>
+                            <img class="w-20" src="<%=path%>" class="size-7" />
+                        </div>
+                        <div class="min-w-16">
+                            <div class="flex">
+                                <img src="/img/humidity.png" class="size-7" />
+                                <h2 class="text-gray-50"><%= weather.weatherData[i].humidity %></h2>
+                            </div>
+                            <div class="flex">
+                                <img src="/img/wind.png" class="size-7" />
+                                <h2 class="text-gray-50"><%= weather.weatherData[i].wind %></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% } } %>
+                <!-- End of inner loop -->
+            </div>
+        </div>
+        <% } %>
+        <!-- End of outer loop -->
+
+        <script src=""></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    </body>
+</html>
